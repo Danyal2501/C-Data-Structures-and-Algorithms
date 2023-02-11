@@ -217,18 +217,16 @@ int ingredient_index(char source_ingredient[MAX_STR_LEN])
      * If the 'source_ingredient' is *not* in the ingredients
      * array, the function returns -1
      */
+    /******
+     * TO Do:
+     * Implement this function
+     *****/
     
 	for (int i=0; i<MAT_SIZE; i++){
 		if (strcmp(source_ingredient, ingredients[i]) == 0){
 			return i;
 		}
 	}
-	
-	
-    /******
-     * TO Do:
-     * Implement this function
-     *****/
      return -1;
 }
 
@@ -317,6 +315,10 @@ intNode *related_k_dist(intNode *h, char source_ingredient[MAX_STR_LEN], int k, 
      * is for!
      * 
      */
+     /*******
+     * TO DO:
+     * Complete this function
+     *******/
 	 
 	 if (k > MAT_SIZE){
 		 k = MAT_SIZE;
@@ -329,7 +331,6 @@ intNode *related_k_dist(intNode *h, char source_ingredient[MAX_STR_LEN], int k, 
 	}
 	 
 	 int index = ingredient_index(source_ingredient);
-	 
 
 	 if (dist > k+1){
 		 return h;
@@ -345,11 +346,6 @@ intNode *related_k_dist(intNode *h, char source_ingredient[MAX_STR_LEN], int k, 
 			 h = related_k_dist(h, ingredients[i], k, dist+1);
 		 }
 	 }
-    
-    /*******
-     * TO DO:
-     * Complete this function
-     *******/
 	 
 	if (dist == 0){
 		for (int i=0; i<MAT_SIZE; i++){
@@ -360,30 +356,7 @@ intNode *related_k_dist(intNode *h, char source_ingredient[MAX_STR_LEN], int k, 
 }
 
 intNode *related_with_restrictions(char source_ingredient[MAX_STR_LEN], char avoid[MAX_STR_LEN], int k_source, int k_avoid)
-{
-
-	intNode *sourceList = NULL;
-	intNode *avoidList = NULL;
-	intNode *restricted = NULL;
-	
-	sourceList = related_k_dist(sourceList, source_ingredient,k_source,0);
-	avoidList = related_k_dist(avoidList, avoid, k_avoid,0);
-	avoidList = insertInt(avoidList, ingredient_index(avoid));
-	intNode *temp = sourceList;
-
-	while(temp !=NULL){
-		if (searchInt(avoidList, temp->x) == 1){
-			temp = temp->next;
-			continue;
-		}
-		restricted = insertInt(restricted, temp->x);
-		temp = temp->next;	
-	}
-	
-	deleteList(sourceList);
-	deleteList(avoidList);
-	
-	return restricted;
+{  
 	
     /*
      * This function returns a linked list that contains the indexes of
@@ -414,6 +387,29 @@ intNode *related_with_restrictions(char source_ingredient[MAX_STR_LEN], char avo
      * TO DO:
      * Implement this function
      *****/
+
+	intNode *sourceList = NULL;
+	intNode *avoidList = NULL;
+	intNode *restricted = NULL;
+	
+	sourceList = related_k_dist(sourceList, source_ingredient,k_source,0);
+	avoidList = related_k_dist(avoidList, avoid, k_avoid,0);
+	avoidList = insertInt(avoidList, ingredient_index(avoid));
+	intNode *temp = sourceList;
+
+	while(temp !=NULL){
+		if (searchInt(avoidList, temp->x) == 1){
+			temp = temp->next;
+			continue;
+		}
+		restricted = insertInt(restricted, temp->x);
+		temp = temp->next;	
+	}
+	
+	deleteList(sourceList);
+	deleteList(avoidList);
+	
+	return restricted;
 }
 
 int checkArray(char recipe[10][MAX_STR_LEN], char ingredient[MAX_STR_LEN]){
@@ -503,8 +499,5 @@ void substitute_ingredient(char recipe[10][MAX_STR_LEN], char to_change[MAX_STR_
 			break;
 		}
 	}
-	
 	strcpy(recipe[change], ingredients[max]);
-
 }
-
