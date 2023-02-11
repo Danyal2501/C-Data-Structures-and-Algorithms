@@ -62,16 +62,15 @@ typedef struct BST_Node_Struct
     //            index of one of them a tiny bit bigger or
     //            a tiny bit smaller than the other one so
     //            their keys are very close, but not identical.
-
+    /*** TO DO:
+     * Complete the definition of the BST_Node_Struct
+     ***/
     double key;
     double freq;
     int bar;
     double index;
-    /*** TO DO:
-     * Complete the definition of the BST_Node_Struct
-     ***/
-	struct BST_Node_Struct* left;
-	struct BST_Node_Struct* right;
+    struct BST_Node_Struct* left;
+    struct BST_Node_Struct* right;
   
 } BST_Node;
 
@@ -85,6 +84,12 @@ BST_Node *newBST_Node(double freq, int bar, double index)
      * 
      * 		(10.0*bar)+index
      */
+    /*** TO DO:
+     * Complete this function to allocate and initialize a
+     * new BST_Node. You should make sure the function sets
+     * initial values for the data in the BST_Node that can
+     * never occur in an actual musical note from a score!
+     ****/
 	 
 	 BST_Node *newNode = NULL;
 	 
@@ -96,18 +101,8 @@ BST_Node *newBST_Node(double freq, int bar, double index)
 	 newNode->index = index;
 	 
 	 newNode -> left = NULL;
-	 newNode -> right = NULL;
-
-	
-	
-    /*** TO DO:
-     * Complete this function to allocate and initialize a
-     * new BST_Node. You should make sure the function sets
-     * initial values for the data in the BST_Node that can
-     * never occur in an actual musical note from a score!
-     ****/
-        
-    return newNode;
+	 newNode -> right = NULL;        
+    	 return newNode;
 }
 
 BST_Node *BST_insert(BST_Node *root, BST_Node *new_node)
@@ -133,7 +128,7 @@ BST_Node *BST_insert(BST_Node *root, BST_Node *new_node)
      * Implement the insert function so we can add notes to the tree!
      ****/
 	 
-	  if (new_node->index > 1 || new_node->index<0||new_node->bar<0){
+	 if (new_node->index > 1 || new_node->index<0||new_node->bar<0){
 		free(new_node);
 		return root;
 	 }
@@ -178,8 +173,6 @@ BST_Node *BST_search(BST_Node *root, int bar, double index)
 
 	 double key = (10.0*bar)+index;
 	 
-	 
-	 
 	 if (root == NULL){
 		 return NULL;
 	 }
@@ -217,9 +210,7 @@ BST_Node *find_successor(BST_Node *right_child_node)
 	 }
 	 else{
 	  return find_successor(current->left);
-	 }
-	 
-    
+	 }	  
 }
 
 BST_Node *BST_delete(BST_Node *root, int bar, double index)
@@ -231,6 +222,9 @@ BST_Node *BST_delete(BST_Node *root, int bar, double index)
      * remove a note at any position without breaking the
      * tree!
      */
+    /*** TO DO:
+     * Implement this function
+     ****/
 
 	 double key = (10.0*bar)+index;
 	 BST_Node* delete = BST_search(root,bar,index);
@@ -285,12 +279,7 @@ BST_Node *BST_delete(BST_Node *root, int bar, double index)
 	 else{
 		 root->right = BST_delete(root->right,bar,index);
 	 }
-	 
-    
-    /*** TO DO:
-     * Implement this function
-     ****/
-    
+	
     return root;
 }
 
@@ -321,20 +310,12 @@ void BST_makePlayList(BST_Node *root)
     /**** TO DO:
      * Implement this function
      ****/
-
-	 
-	 
 	 if (root == NULL){
 		 return;
 	 }
 	 BST_makePlayList(root->left);
-	 
 	 playlist_head = playlist_insert(playlist_head, root->freq, root->bar, root->index);
-	 
-	 BST_makePlayList(root->right);
-	 
-	 
-
+	 BST_makePlayList(root->right);	 	 
 }
 
 void BST_inOrder(BST_Node *root, int depth)
@@ -355,23 +336,17 @@ void BST_inOrder(BST_Node *root, int depth)
      * is located! (this should help you debug your code by
      * making it easier to check the shape of your BST).
      */
+     /*** TO DO:
+     * Implement this function
+     ****/
 	 
 	 if (root == NULL){
 		 return;
 	 }
 	 
-	 
 	 BST_inOrder(root->left,depth+1);
-	 
 	 printf("Depth=%d, Bar:Index (%d:%f), F=%f Hz\n",depth,root->bar,root->index,root->freq);
-	 
 	 BST_inOrder(root->right,depth+1);
-
-    
-    /*** TO DO:
-     * Implement this function
-     ****/
-
 } 
 
 void BST_preOrder(BST_Node *root, int depth)
@@ -402,11 +377,8 @@ void BST_preOrder(BST_Node *root, int depth)
 	 }
 	 
 	 printf("Depth=%d, Bar:Index (%d:%f), F=%f Hz\n",depth,root->bar,root->index,root->freq);
-	 
 	 BST_preOrder(root->left,depth+1);
-	 
 	 BST_preOrder(root->right,depth+1);
-
 }
 
 void BST_postOrder(BST_Node *root,int depth)
@@ -436,12 +408,9 @@ void BST_postOrder(BST_Node *root,int depth)
 		 return;
 	 }
 	 
-	 BST_postOrder(root->left,depth+1);
-	 
-	 BST_postOrder(root->right,depth+1);
-	 
+	 BST_postOrder(root->left,depth+1); 
+	 BST_postOrder(root->right,depth+1); 
 	 printf("Depth=%d, Bar:Index (%d:%f), F=%f Hz\n",depth,root->bar,root->index,root->freq);
-
 } 
 
 void delete_BST(BST_Node *root)
@@ -451,23 +420,19 @@ void delete_BST(BST_Node *root)
      * nodes in it. Recall that there is a specific order in which
      * this needs to be done! (consult the Unit 4 notes as needed)
      */
-    
+		 
+     /**** TO DO:
+     * Implement this function
+     ****/
+
 	 if (root == NULL){
 		 return;
 	 }
 
 	 delete_BST(root->left);
-
 	 delete_BST(root->right);
-	
-     free(root);
-	
-	 root = NULL;
-	 
-	 
-    /**** TO DO:
-     * Implement this function
-     ****/
+         free(root);
+	 root = NULL;	 
 }
 
 void BST_shiftFreq(BST_Node *root, char note_src[5], char note_dst[5])
@@ -511,9 +476,12 @@ void BST_shiftFreq(BST_Node *root, char note_src[5], char note_dst[5])
      * corresponds to the frequency of note_src, should have
      * their frequency changed to that of note_dst.
      */
-
-	 char name[5] = " ";
-	 
+	
+     /*** TO DO:
+     * Implement this function! (Crunchy!)
+     ****/
+	
+	 char name[5] = " "; 
 	 if (root == NULL){
 		 return;
 	 }
@@ -534,16 +502,8 @@ void BST_shiftFreq(BST_Node *root, char note_src[5], char note_dst[5])
 		 }
 	 }
 	 
-	 
-	 BST_shiftFreq(root->left,note_src,note_dst);
-	 
-     BST_shiftFreq(root->right,note_src,note_dst);
-
-
-    /*** TO DO:
-     * Implement this function! (Crunchy!)
-     ****/
-
+	 BST_shiftFreq(root->left,note_src,note_dst); 
+     	 BST_shiftFreq(root->right,note_src,note_dst);
 }
 
 /********************************************************************************************
@@ -619,9 +579,11 @@ BST_Node *BST_harmonize(BST_Node *root, int semitones, double time_shift)
      * Expected result: The BST will have about twice as many notes
      *   as before, and the new notes are shifted in pitch and 
      *   in time as specified by the parameters. 
-     */
+     */	
+    /*** TO DO:
+     * Implement this function
+     ****/
 	 BST_Node* newNode = NULL;
-	// double incr = 0.0000001;//
 	 double newFreq = 0.0;
 	 int valid = 0;
 	 
@@ -653,18 +615,7 @@ BST_Node *BST_harmonize(BST_Node *root, int semitones, double time_shift)
 
 		 newNode = newBST_Node(newFreq,root->bar,root->index+time_shift);
 		 root = BST_insert(root,newNode);
-		 }
-		 
-		 
-		 
-	 
-
-	 
-	 
+		 }	  
+	
 	 return root;
-    
-    /*** TO DO:
-     * Implement this function
-     ****/
-
 }
